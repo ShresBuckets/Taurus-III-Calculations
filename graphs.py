@@ -3,8 +3,9 @@ import numpy as np
 import matplotlib.pyplot as plt
 from calculations import getOptimumExpansionRatio
 
-def getData(source_path, pressure, destination_path):
-    df = pd.read_csv(source_path)
+def getData(paths, pressure):
+
+    df = pd.read_csv(paths[0])
     
     OF = df["OF_RATIO"].to_numpy()
     ISP = df["ISP"].to_numpy()
@@ -47,9 +48,23 @@ def getData(source_path, pressure, destination_path):
     fig.tight_layout()
 
 
-    plt.savefig(destination_path)
-    #print(matplotlib.get_backend())
-getData("data/400psi.csv",400, "graphs/400psi.png")
+    plt.savefig(paths[1])
+    
+def getPaths(pressure):
+    source = f"data/{pressure}psi.csv"
+    dest = f"graphs/{pressure}psi.png"
+    return (source, dest)
+
+getData(getPaths(350), 350)
+getData(getPaths(375), 375)
+getData(getPaths(400), 400)
+getData(getPaths(425), 425)
+getData(getPaths(450), 450)
+getData(getPaths(475), 475)
+getData(getPaths(500), 500)
+getData(getPaths(525), 525)
+#getData(getPaths(550), 550)
+print("done")
 
     
 
