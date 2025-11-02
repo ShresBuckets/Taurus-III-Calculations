@@ -11,4 +11,5 @@ Expansion Ratio v.s. OF
 OF = df450["OF_RATIO"].to_numpy()
 ISP = df450["ISP"].to_numpy()
 plt.plot(OF,ISP)
+plt.show()
 
