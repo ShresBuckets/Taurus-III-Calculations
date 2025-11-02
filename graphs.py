@@ -13,7 +13,7 @@ def getData(paths, pressure):
     CP_CV = df["CP_CV"].to_numpy()
 
 
-    fig, axs = plt.subplots(3, sharex = True) 
+    fig, axs = plt.subplots(3) 
     """
     Plot in the following order:
     Graphs for ISP v.s. OF, 
