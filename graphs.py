@@ -2,6 +2,10 @@ import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
 from calculations import getOptimumExpansionRatio
+from calculations import getMassFlow
+from calculations import getExhaustVelocity
+from calculations import getThroatDiameter
+
 
 F_thrust = 40960 #in N, harcoded constant
 burn_time = 5 #in s, hardcoded constant
@@ -15,29 +19,30 @@ def getData(paths, pressure):
     ISP = df["ISP"].to_numpy()
     TEMP = df["CHAMBER_TEMP"].to_numpy()
     CP_CV = df["CP_CV"].to_numpy()
+    MOL_WEIGHT = df["MOL_WEIGHT"].to_numpy()
 
 
-    fig, axs = plt.subplots(3) 
+    fig, axs = plt.subplots(4) 
     """
     Plot in the following order:
     Graphs for ISP v.s. OF, 
     Temperature v.s. OF, 
     Expansion Ratio v.s. OF
     """
-    #ISP v.s. OF Plot
+    """ISP v.s. OF Plot"""
     axs[0].plot(OF,ISP)
     axs[0].set_xlabel("OF Ratio")
     axs[0].set_ylabel("ISP")
     axs[0].set_title(f"ISP v.s. OF at {pressure} psi")
 
 
-    #Temp v.s. OF Plot
+    """Temp v.s. OF Plot"""
     axs[1].plot(OF,TEMP)
     axs[1].set_xlabel("OF Ratio")
     axs[1].set_ylabel("Temperature (K)")
     axs[1].set_title(f"Chamber Temp (K) v.s. OF at {pressure} psi")
 
-    #expansion ratio calculation (Ae / A*) and epsilon v.s. OF
+    """expansion ratio calculation (Ae / A*) and epsilon v.s. OF"""
     exp_ratios = []
     for i in range(len(df)):
         exp_ratios.append(getOptimumExpansionRatio(TEMP[i], CP_CV[i], pressure))
@@ -48,6 +53,18 @@ def getData(paths, pressure):
     axs[2].set_ylabel("Expansion Ratio")
     axs[2].set_title(f"Expansion Ratio v.s. OF at {pressure} psi")
 
+    """throat diameter v.s. OF plot"""
+    throat_diameter = []
+    for i in range(len(df)):
+        c = getExhaustVelocity(F_thrust, burn_time)
+        mdot = getMassFlow(F_thrust, c)
+        throat_diameter.append(getThroatDiameter(mdot, pressure, MOL_WEIGHT[i], TEMP[i], CP_CV[i]))
+
+    throat_diameter = np.array(throat_diameter)
+    axs[3].plot(OF, throat_diameter)
+    axs[3].set_xlabel("OF Ratio")
+    axs[3].set_ylabel("Throat Diameter (inches)")
+    axs[3].set_title(f"Throat Diameter v.s. OF at {pressure} psi")
 
     fig.tight_layout()
 
