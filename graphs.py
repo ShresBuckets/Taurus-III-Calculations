@@ -3,6 +3,10 @@ import numpy as np
 import matplotlib.pyplot as plt
 from calculations import getOptimumExpansionRatio
 
+F_thrust = 40960 #in N, harcoded constant
+burn_time = 5 #in s, hardcoded constant
+
+
 def getData(paths, pressure):
 
     df = pd.read_csv(paths[0])
