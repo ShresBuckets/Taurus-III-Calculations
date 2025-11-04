@@ -5,10 +5,11 @@ from calculations import getOptimumExpansionRatio
 from calculations import getMassFlow
 from calculations import getExhaustVelocity
 from calculations import getThroatDiameter
+from calculations import getExitDiameter
 
-
-F_thrust = 40960 #in N, harcoded constant
-burn_time = 5 #in s, hardcoded constant
+impulse = 40960 #in N, harcoded constant
+burn_time = 5.1 #in s, hardcoded constant
+thrust_avg = impulse / burn_time
 
 
 def getData(paths, pressure):
@@ -22,7 +23,7 @@ def getData(paths, pressure):
     MOL_WEIGHT = df["MOL_WEIGHT"].to_numpy()
 
 
-    fig, axs = plt.subplots(4) 
+    fig, axs = plt.subplots(5, constrained_layout = True) 
     """
     Plot in the following order:
     Graphs for ISP v.s. OF, 
@@ -56,20 +57,32 @@ def getData(paths, pressure):
     """throat diameter v.s. OF plot"""
     throat_diameter = []
     for i in range(len(df)):
-        c = getExhaustVelocity(F_thrust, burn_time)
-        mdot = getMassFlow(F_thrust, c)
+        c = getExhaustVelocity(ISP[i])
+        mdot = getMassFlow(thrust_avg, c)
         throat_diameter.append(getThroatDiameter(mdot, pressure, MOL_WEIGHT[i], TEMP[i], CP_CV[i]))
-
+    print(exp_ratios)
     throat_diameter = np.array(throat_diameter)
     axs[3].plot(OF, throat_diameter)
     axs[3].set_xlabel("OF Ratio")
-    axs[3].set_ylabel("Throat Diameter (inches)")
+    axs[3].set_ylabel("Throat Diameter (in.)")
     axs[3].set_title(f"Throat Diameter v.s. OF at {pressure} psi")
+    #print(throat_diameter)
 
-    fig.tight_layout()
+    """exit cone diameter calculations"""
+    exit_diameter = []
+    for i in range(len(throat_diameter)):
+        exit_diameter.append(getExitDiameter(exp_ratios[i], throat_diameter[i]))
+    exit_diameter = np.array(exit_diameter)
+
+    axs[4].plot(OF, exit_diameter)
+    axs[4].set_xlabel("OF Ratio")
+    axs[4].set_ylabel("Exit Diameter (in.)")
+    axs[4].set_title(f"Exit Diameter v.s. OF at {pressure} psi")
+    #fig.tight_layout()
 
 
     plt.savefig(paths[1])
+    plt.show()
     
 def getPaths(pressure):
     source = f"data/{pressure}psi.csv"

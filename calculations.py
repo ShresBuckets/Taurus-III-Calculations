@@ -15,15 +15,15 @@ def getOptimumExpansionRatio(T, k, P0):
     epsilon = 1 / (first_term * second_term * third_term)
     return epsilon
 
-def getExhaustVelocity(thrust, burntime):
-    return thrust / burntime
+def getExhaustVelocity(isp): 
+    return isp * 9.81
 
-def getMassFlow(thrust, c):
+def getMassFlow(thrust, c): #T = mdot * c
     return thrust / c
 
 def getThroatDiameter(mdot, P0, molecular_mass, T0, k): 
     """Returns the throat diameter. P0 is the chamber pressure, T0 is the chamber temperature. 
-    Assumes mdot is in kg/s, P0 is in psi, molecular mass is in g/mol, T0 is in K, k is dimensionless.
+        Assumes mdot is in kg/s, P0 is in psi, molecular mass is in g/mol, T0 is in K, k is dimensionless.
     """
 
     P0 *= 6894.76 #convert psi to pascal
@@ -40,6 +40,9 @@ def getThroatDiameter(mdot, P0, molecular_mass, T0, k):
 
     return diameter
 
-
+def getExitDiameter(exp_ratio, throat_diameter):
+    return sqrt(throat_diameter**2 * exp_ratio)
+#Ae = ep * At
+#de^2 = ep * dt^2
 
 
