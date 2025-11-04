@@ -49,7 +49,7 @@ def getData(paths, pressure):
         exp_ratios.append(getOptimumExpansionRatio(TEMP[i], CP_CV[i], pressure))
                           
     exp_ratios = np.array(exp_ratios)
-    axs[2].plot(OF, exp_ratios)
+    axs[2].scatter(OF, exp_ratios, color = "blue", marker = ".")
     axs[2].set_xlabel("OF Ratio")
     axs[2].set_ylabel("Expansion Ratio")
     axs[2].set_title(f"Expansion Ratio v.s. OF at {pressure} psi")
@@ -62,7 +62,7 @@ def getData(paths, pressure):
         throat_diameter.append(getThroatDiameter(mdot, pressure, MOL_WEIGHT[i], TEMP[i], CP_CV[i]))
     #print(exp_ratios)
     throat_diameter = np.array(throat_diameter)
-    axs[3].plot(OF, throat_diameter)
+    axs[3].scatter(OF, throat_diameter, color = "blue", marker = ".")
     axs[3].set_xlabel("OF Ratio")
     axs[3].set_ylabel("Throat Diameter (inches)")
     axs[3].set_title(f"Throat Diameter v.s. OF at {pressure} psi")
@@ -74,7 +74,7 @@ def getData(paths, pressure):
         exit_diameter.append(getExitDiameter(exp_ratios[i], throat_diameter[i]))
     exit_diameter = np.array(exit_diameter)
 
-    axs[4].plot(OF, exit_diameter)
+    axs[4].scatter(OF, exit_diameter, color = "blue", marker = ".")
     axs[4].set_xlabel("OF Ratio")
     axs[4].set_ylabel("Exit Diameter (inches)")
     axs[4].set_title(f"Exit Diameter v.s. OF at {pressure} psi")
