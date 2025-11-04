@@ -23,7 +23,7 @@ def getData(paths, pressure):
     MOL_WEIGHT = df["MOL_WEIGHT"].to_numpy()
 
 
-    fig, axs = plt.subplots(5, constrained_layout = True) 
+    fig, axs = plt.subplots(5, figsize = (8,12))  
     """
     Plot in the following order:
     Graphs for ISP v.s. OF, 
@@ -60,11 +60,11 @@ def getData(paths, pressure):
         c = getExhaustVelocity(ISP[i])
         mdot = getMassFlow(thrust_avg, c)
         throat_diameter.append(getThroatDiameter(mdot, pressure, MOL_WEIGHT[i], TEMP[i], CP_CV[i]))
-    print(exp_ratios)
+    #print(exp_ratios)
     throat_diameter = np.array(throat_diameter)
     axs[3].plot(OF, throat_diameter)
     axs[3].set_xlabel("OF Ratio")
-    axs[3].set_ylabel("Throat Diameter (in.)")
+    axs[3].set_ylabel("Throat Diameter (inches)")
     axs[3].set_title(f"Throat Diameter v.s. OF at {pressure} psi")
     #print(throat_diameter)
 
@@ -76,13 +76,15 @@ def getData(paths, pressure):
 
     axs[4].plot(OF, exit_diameter)
     axs[4].set_xlabel("OF Ratio")
-    axs[4].set_ylabel("Exit Diameter (in.)")
+    axs[4].set_ylabel("Exit Diameter (inches)")
     axs[4].set_title(f"Exit Diameter v.s. OF at {pressure} psi")
-    #fig.tight_layout()
 
+    fig.tight_layout() #no overlapp of titles
+
+    #plt.subplots_adjust(hspace = 8)
 
     plt.savefig(paths[1])
-    plt.show()
+    #plt.show()
     
 def getPaths(pressure):
     source = f"data/{pressure}psi.csv"
