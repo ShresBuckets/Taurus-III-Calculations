@@ -1,3 +1,4 @@
+![alt text](https://sites.utexas.edu/sec/files/2020/09/LRA-Logo-James-A-Schoener.jpg)
 # Taurus-III-Calculations
 Taurus 3 Calculations and Data Visualizations
 
