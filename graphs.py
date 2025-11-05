@@ -6,6 +6,7 @@ from calculations import getMassFlow
 from calculations import getExhaustVelocity
 from calculations import getThroatDiameter
 from calculations import getExitDiameter
+from calculations import getDivergingLength
 
 impulse = 40960 #in N, harcoded constant
 burn_time = 5.1 #in s, hardcoded constant
@@ -23,7 +24,7 @@ def getData(paths, pressure):
     MOL_WEIGHT = df["MOL_WEIGHT"].to_numpy()
 
 
-    fig, axs = plt.subplots(5, figsize = (8,12))  
+    fig, axs = plt.subplots(6, figsize = (8,15))  
     """
     Plot in the following order:
     Graphs for ISP v.s. OF, 
@@ -70,7 +71,7 @@ def getData(paths, pressure):
 
     """exit cone diameter calculations"""
     exit_diameter = []
-    for i in range(len(throat_diameter)):
+    for i in range(len(df)):
         exit_diameter.append(getExitDiameter(exp_ratios[i], throat_diameter[i]))
     exit_diameter = np.array(exit_diameter)
 
@@ -78,6 +79,17 @@ def getData(paths, pressure):
     axs[4].set_xlabel("OF Ratio")
     axs[4].set_ylabel("Exit Diameter (inches)")
     axs[4].set_title(f"Exit Diameter v.s. OF at {pressure} psi")
+
+    """exit length calculations"""
+    diverging_length = []
+    for i in range(len(df)):
+        diverging_length.append(getDivergingLength(throat_diameter[i], exp_ratios[i], conical = True))
+    np.array(diverging_length)
+    axs[5].scatter(OF, diverging_length, color = "blue", marker = ".")
+    axs[5].set_xlabel("OF Ratio")
+    axs[5].set_ylabel("Diverging Length (inches)")
+    axs[5].set_title(f"Diverging Length v.s. OF at {pressure} psi")
+
 
     fig.tight_layout() #no overlapp of titles
 
