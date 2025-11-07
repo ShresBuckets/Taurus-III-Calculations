@@ -14,7 +14,7 @@ pressure = 350 #in psi, fix this
 csv_path = [f"data/{pressure}psi.csv"]
 #csv_path = [f"data/{pressure}psi.csv" for pressure in range(350,551,25)]
 
-of_ratio_index = 6  #fix this, corresponds to an OF ratio of 5 but the index in the csv is the 6th row
+of_ratio_index = 16  #fix this, corresponds to an OF ratio of 5 but the index in the csv is the 6th row
 
 for path in csv_path:
     fig, axs = plt.subplots(3, figsize = (8, 20)) 
