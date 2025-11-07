@@ -1,3 +1,8 @@
+"""
+Given a set burn time, the following code calculates the nozzle geometry and chamber properties at a 
+variety of OF ratios and a variety of chamber pressures. 
+"""
+
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
