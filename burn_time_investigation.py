@@ -53,7 +53,7 @@ for path in csv_path:
     for i in range(1, len(thrust_avg)):
         diverging_length[i] = abs(diverging_length[i]-diverging_length[0]) / diverging_length[0]
         throat_diameter[i] = abs(throat_diameter[i]-throat_diameter[0]) / throat_diameter[0]
-        diverging_length[i] = abs(exit_diameter[i]-exit_diameter[0]) / exit_diameter[0]
+        exit_diameter[i] = abs(exit_diameter[i]-exit_diameter[0]) / exit_diameter[0]
 
         #print(abs(throat_diameter[i]-throat_diameter[i-1]))
         #print(abs(diverging_length[i]-diverging_length[i-1]))
@@ -74,7 +74,7 @@ for path in csv_path:
     axs[2].set_title("Percent Change in Diverging Length v.s. Burn Time")
 
     #print(throat_diameter)
-
+    
     fig.tight_layout()
     plt.savefig("burn_time.png")
 print("success")
