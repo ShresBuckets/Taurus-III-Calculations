@@ -68,6 +68,7 @@ def getData(paths, pressure):
         throat_diameter.append(getThroatDiameter(mdot, pressure, MOL_WEIGHT[i], TEMP[i], CP_CV[i]))
     #print(exp_ratios)
     throat_diameter = np.array(throat_diameter)
+    
     axs[3].scatter(OF, throat_diameter, color = "blue", marker = ".")
     axs[3].set_xlabel("OF Ratio")
     axs[3].set_ylabel("Throat Diameter (inches)")
@@ -89,7 +90,8 @@ def getData(paths, pressure):
     diverging_length = []
     for i in range(len(df)):
         diverging_length.append(getDivergingLength(throat_diameter[i], exp_ratios[i], conical = True))
-    np.array(diverging_length)
+    diverging_length = np.array(diverging_length)
+    
     axs[5].scatter(OF, diverging_length, color = "blue", marker = ".")
     axs[5].set_xlabel("OF Ratio")
     axs[5].set_ylabel("Diverging Length (inches)")
