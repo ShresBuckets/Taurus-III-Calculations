@@ -13,6 +13,8 @@ burn_time = 5.1 #in s, hardcoded constant
 thrust_avg = impulse / burn_time
 
 
+
+
 def getData(paths, pressure):
 
     df = pd.read_csv(paths[0])
