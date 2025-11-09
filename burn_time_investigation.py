@@ -28,7 +28,7 @@ for path in csv_path:
     CP_CV = df["CP_CV"].to_numpy()[of_ratio_index]
     MOL_WEIGHT = df["MOL_WEIGHT"].to_numpy()[of_ratio_index]
 
-    exp_ratio = getOptimumExpansionRatio(TEMP, CP_CV, pressure) #note, expansion ratio does NOT have a dependency on burn time
+    exp_ratio = getOptimumExpansionRatio(TEMP, CP_CV, pressure, 14.7) #note, expansion ratio does NOT have a dependency on burn time
     throat_diameter = []
     exit_diameter = []
     diverging_length = []

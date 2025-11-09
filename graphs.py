@@ -49,7 +49,7 @@ def getData(paths, pressure):
     """expansion ratio calculation (Ae / A*) and epsilon v.s. OF"""
     exp_ratios = []
     for i in range(len(df)):
-        exp_ratios.append(getOptimumExpansionRatio(TEMP[i], CP_CV[i], pressure))
+        exp_ratios.append(getOptimumExpansionRatio(TEMP[i], CP_CV[i], pressure, 14.7))
                           
     exp_ratios = np.array(exp_ratios)
     axs[2].scatter(OF, exp_ratios, color = "blue", marker = ".")
