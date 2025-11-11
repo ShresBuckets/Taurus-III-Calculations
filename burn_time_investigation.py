@@ -10,11 +10,11 @@ from calculations import getDivergingLength, getExhaustVelocity, getExitDiameter
 t = 5.1 #initial burn time
 time = np.linspace(t,9,50)
 impulse = 40960 # in Ns
-pressure = 350 #in psi, fix this
+pressure = 450 #in psi, fix this
 csv_path = [f"data/{pressure}psi.csv"]
 #csv_path = [f"data/{pressure}psi.csv" for pressure in range(350,551,25)]
 
-of_ratio_index = 16  #fix this, corresponds to an OF ratio of 5 but the index in the csv is the 6th row
+of_ratio_index = 6  #fix this, corresponds to an OF ratio of 5 but the index in the csv is the 6th row
 
 for path in csv_path:
     fig, axs = plt.subplots(3, figsize = (8, 20)) 
@@ -49,7 +49,8 @@ for path in csv_path:
     diverging_length = np.array(diverging_length)
     throat_diameter = np.array(throat_diameter)
     exit_diameter = np.array(exit_diameter)
-
+    
+    #calculate percent changes:
     for i in range(1, len(thrust_avg)):
         diverging_length[i] = abs(diverging_length[i]-diverging_length[0]) / diverging_length[0]
         throat_diameter[i] = abs(throat_diameter[i]-throat_diameter[0]) / throat_diameter[0]
