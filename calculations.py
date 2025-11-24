@@ -3,6 +3,7 @@ from math import pow
 from math import pi
 from math import tan
 from math import cos
+from math import radians 
 
 def getOptimumExpansionRatio(T, k, P0, ambient):
     """
@@ -52,7 +53,7 @@ def getDivergingLength(throat_diameter, exp_ratio, half_angle = 15, conical = Fa
     Throat_diameter should be in inches, half angle
     is in degrees. 
     """
-
+    half_angle = radians(half_angle)
     throat_radius = throat_diameter / 2
     trapezoidal_comp = throat_radius * (sqrt(exp_ratio) - 1) / tan(half_angle)
     R = 1.5 * throat_radius #rule of thumb, see construction
