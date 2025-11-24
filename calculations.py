@@ -86,4 +86,3 @@ def getDivergingLength(throat_diameter, exp_ratio, half_angle = 15, conical = Fa
     elif bell:
         return L_n * bell_fraction
 
-print(getBurnTime())

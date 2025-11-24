@@ -6,13 +6,11 @@ variety of OF ratios and a variety of chamber pressures.
 import pandas as pd
 import numpy as np
 import matplotlib.pyplot as plt
-from calculations import getOptimumExpansionRatio, getMassFlow, getExhaustVelocity, getThroatDiameter, getExitDiameter, getDivergingLength
+from calculations import getOptimumExpansionRatio, getMassFlow, getExhaustVelocity, getThroatDiameter, getExitDiameter, getDivergingLength, getBurnTime
 
 impulse = 40960 #in N, harcoded constant
-burn_time = 5.1 #in s, hardcoded constant
+burn_time = getBurnTime() #in s, hardcoded constant
 thrust_avg = impulse / burn_time
-
-
 
 
 def getData(paths, pressure):

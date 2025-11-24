@@ -7,7 +7,7 @@ import pandas as pd
 import matplotlib.pyplot as plt
 from calculations import getDivergingLength, getExhaustVelocity, getExitDiameter, getMassFlow, getOptimumExpansionRatio, getThroatDiameter
 
-t = 5.1 #initial burn time
+t = 5.1 #initial burn time guesstimate
 time = np.linspace(t,9,50)
 impulse = 40960 # in Ns
 pressure = 450 #in psi, fix this
