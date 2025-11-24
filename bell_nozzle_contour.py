@@ -6,6 +6,11 @@ from sympy import cos
 from sympy import tan
 from sympy import symbols
 """
+Note: the following code has an error and is unable to find a numerical solution to the system of nonlinear equations.
+Use the method of bezier curves instead. 
+"""
+
+"""
 To calculate the bell nozzle spline, the following inputs are needed:
 - throat radius 
 - expansion ratio (calculated)

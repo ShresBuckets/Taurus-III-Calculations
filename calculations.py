@@ -5,6 +5,22 @@ from math import tan
 from math import cos
 from math import radians 
 
+total_impulse = 40960 #Ns (requirement)
+launch_rail_length = 24 #in feet (requirement, good luck to whoever has to build this at IREC!!)
+total_mass = 63 #in kg (determined from above requirements and from 30,000 f.t. apogee)
+launch_exit_velocity = 110 #in feet/s (motivated from IREC requirements)
+g = 9.81 #gravitational acceleration in m/s^2
+
+def getBurnTime():
+    metric_rail_length = launch_rail_length * 0.3048 #unit conversion
+    metric_exit_velocity = launch_exit_velocity * 0.3048 #unit conversion
+    #print(metric_exit_velocity)
+    #print(metric_rail_length)
+
+    F_avg = total_mass * (metric_exit_velocity**2 / (2 * metric_rail_length) + g)
+    #print(F_avg)
+    return total_impulse / F_avg
+
 def getOptimumExpansionRatio(T, k, P0, ambient):
     """
     Returns the optimum expansion ratio assuming the 
@@ -70,3 +86,4 @@ def getDivergingLength(throat_diameter, exp_ratio, half_angle = 15, conical = Fa
     elif bell:
         return L_n * bell_fraction
 
+print(getBurnTime())
