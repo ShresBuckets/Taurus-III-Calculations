@@ -10,6 +10,14 @@ launch_rail_length = 24 #in feet (requirement, good luck to whoever has to build
 total_mass = 63 #in kg (determined from above requirements and from 30,000 f.t. apogee)
 launch_exit_velocity = 110 #in feet/s (motivated from IREC requirements)
 g = 9.81 #gravitational acceleration in m/s^2
+OF = 6 #design choice, "average OF"
+chamber_pressure = 450 #design choice chamber pressure (in psi)
+
+def getTotalMassExpel(ISP):
+    return total_impulse / (ISP * g)
+
+
+
 
 def getBurnTime():
     metric_rail_length = launch_rail_length * 0.3048 #unit conversion
