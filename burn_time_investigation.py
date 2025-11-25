@@ -77,7 +77,7 @@ for path in csv_path:
     #print(throat_diameter)
     
     fig.tight_layout()
-    plt.savefig("burn_time.png")
+    plt.savefig("nozzle plots/burn_time.png")
 print("success")
 
 

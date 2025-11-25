@@ -24,7 +24,8 @@ def getBurnTime():
 def getOptimumExpansionRatio(T, k, P0, ambient):
     """
     Returns the optimum expansion ratio assuming the 
-    ambient pressure is ambient_pressure (in psi). Assumes T is in K, P0 is in PSI (ratio with 14.7 is dimensionless), k is dimensionless
+    ambient pressure is ambient_pressure (in psi). Assumes T is in K, P0 is the chamber pressure 
+    in PSI (ratio with 14.7 is dimensionless), k is dimensionless
     """
     pressure_ratio = ambient/P0
     first_term = pow((k + 1) / 2, 1 / (k-1))
