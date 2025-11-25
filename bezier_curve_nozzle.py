@@ -449,11 +449,12 @@ if __name__=="__main__":
 	# typical upper stage values
 	mass_flow = getMassFlow(40960 / getBurnTime(), getExhaustVelocity(isp))
 	aratio =  getOptimumExpansionRatio(T, k, 450, ambient)			# Ae / At	
-	throat_radius = getThroatDiameter(mass_flow, 450, molecular_mass, T, k)  # {'radius_throat': 40, 'radius_exit': 210}		
+	throat_radius = getThroatDiameter(mass_flow, 450, molecular_mass, T, k) / 2  # {'radius_throat': 40, 'radius_exit': 210}		
 
 	# rao_bell_nozzle_contour
 	angles, contour = bell_nozzle(k, aratio, throat_radius, l_percent)
 	# plot contour
 	title = 'Bell Nozzle \n [Area Ratio = ' + str(round(aratio,1)) + ', Throat Radius = ' + str(round(throat_radius,1)) + ']' 
 	plot(title, throat_radius, angles, contour)
+
 	print("done")
