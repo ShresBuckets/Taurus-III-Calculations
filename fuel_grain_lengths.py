@@ -21,3 +21,8 @@ const = float(2*n + 1)
 inner_radius = np.power(np.power(outer_radius, const) - const*a*np.power(mdot_ox/ np.pi, n)*burn_time, 1/const)
 
 grain_length = getFuelMass() / (np.pi * htpb_density * (outer_radius**2 - inner_radius**2))
+
+print(f"Grain Outer Diameter: {outer_radius * 2 / .0254}")
+print(f"Grain Inner Diameter: {inner_radius * 2 / .0254}")
+print(f"Grain Thickness: {(outer_radius - inner_radius) / .0254}")
+print(f"Grain Length: {grain_length / .0254}")
