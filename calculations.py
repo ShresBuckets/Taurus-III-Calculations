@@ -12,14 +12,25 @@ launch_exit_velocity = 110 #in feet/s (motivated from IREC requirements)
 g = 9.81 #gravitational acceleration in m/s^2
 OF = 6 #design choice, "average OF"
 chamber_pressure = 450 #design choice chamber pressure (in psi)
-
-def getTotalMassExpel(ISP):
-    return total_impulse / (ISP * g)
+total_expelled_mass = total_impulse / (233.2737523 * g) #ISP value from 450psi.csv
 
 
+
+def getOxMass():
+    """Returns total expelled mass of oxidizer in kg"""
+    return OF * getFuelMass() 
+
+def getFuelMass():
+    """Returns total expelled mass of fuel in kg"""
+    return total_expelled_mass / (OF + 1)
+
+def getOxMassFlow():
+    "Returns mass flow rate of oxidizer in kg/s (assumed constant)"
+    return getOxMass() / getBurnTime()
 
 
 def getBurnTime():
+    """Returns burn time in seconds"""
     metric_rail_length = launch_rail_length * 0.3048 #unit conversion
     metric_exit_velocity = launch_exit_velocity * 0.3048 #unit conversion
     #print(metric_exit_velocity)
@@ -28,6 +39,7 @@ def getBurnTime():
     F_avg = total_mass * (metric_exit_velocity**2 / (2 * metric_rail_length) + g)
     #print(F_avg)
     return total_impulse / F_avg
+
 
 def getOptimumExpansionRatio(T, k, P0, ambient):
     """
