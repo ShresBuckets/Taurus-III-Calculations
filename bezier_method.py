@@ -2,7 +2,7 @@ import math
 import numpy as np
 import matplotlib.pyplot as plt
 import pandas as pd
-from calculations import getOptimumExpansionRatio, getThroatDiameter, getMassFlow, getExhaustVelocity, getBurnTime
+from calculations import getOptimumExpansionRatio, getThroatDiameter, getMassFlow, getExhaustVelocity, getBurnTime, getDivergingLength
 
 
 from matplotlib.patches import Arc
@@ -108,7 +108,7 @@ def bell_nozzle(k, aratio, Rt, l_percent):
 	Nx = 0.382 * Rt * math.cos(theta_n - math.pi/2)
 	Ny = 0.382 * Rt * math.sin(theta_n - math.pi/2) + 1.382 * Rt 
 	# Ex - [Eqn. 3], and coordinate Ey - [Eqn. 2]
-	Ex = Lnp * ( (math.sqrt(aratio) - 1) * Rt )/ math.tan(math.radians(15) )
+	Ex = Lnp * getDivergingLength(2*Rt, aratio, conical = True) #( (math.sqrt(aratio) - 1) * Rt )/ math.tan(math.radians(15) )
 	Ey = math.sqrt(aratio) * Rt 
 	# gradient m1,m2 - [Eqn. 8]
 	m1 = math.tan(theta_n);  m2 = math.tan(theta_e);
@@ -116,14 +116,14 @@ def bell_nozzle(k, aratio, Rt, l_percent):
 	C1 = Ny - m1*Nx;  C2 = Ey - m2*Ex;
 	# intersection of these two lines (at point Q)-[Eqn.10]
 	Qx = (C2 - C1)/(m1 - m2)
-	Qy = (m1*C2 - m2*C1) / (m1 - m2)	
+	Qy = (m1*C2 - m2*C1)/(m1 - m2)	
 	print(f"Nx: {Nx}")
 	print(f"Ny: {Ny}")
 	print(f"Ex: {Ex}")
 	print(f"Ey: {Ey}")
 	print(f"Qx: {Qx}")
 	print(f"Qy: {Qy}")
-	
+	print(f"Diverging Length: {Ex}")
 	# Selecting equally spaced divisions between 0 and 1 produces 
 	# the points described earlier in the graphical method
 	# The bell is a quadratic Bézier curve, which has equations:
@@ -154,22 +154,21 @@ def find_wall_angles(ar, Rt, l_percent = 80 ):
 	theta_e_90 	= [11.5, 10.5,  8.0,  7.0,  6.5,  6.0,  6.0,  6.0]	
 
 	# nozzle length
-	f1 = ( (math.sqrt(ar) - 1) * Rt + 1.5*Rt*(1/math.cos(math.radians(15))-1))/ math.tan(math.radians(15))
-	print(f1)
+	f1 =  getDivergingLength(2*Rt, ar, conical = True) #(math.sqrt(ar) - 1) * Rt / math.tan(math.radians(15))
+
 	if l_percent == 60:
 		theta_n = theta_n_60; theta_e = theta_e_60;
 		Ln = 0.6 * f1
 	elif l_percent == 80:
 		theta_n = theta_n_80; theta_e = theta_e_80;
 		Ln = 0.8 * f1		
-		print(f"nozzle length {Ln}")
 	elif l_percent == 90:
 		theta_n = theta_n_90; theta_e = theta_e_90;	
 		Ln = 0.9 * f1	
 	else:
 		theta_n = theta_n_80; theta_e = theta_e_80;		
 		Ln = 0.8 * f1
-
+		
 	# find the nearest ar index in the aratio list
 	x_index, x_val = find_nearest(aratio, ar)
 	# if the value at the index is close to input, return it
@@ -432,14 +431,14 @@ def plot(title, throat_radius, angles, contour):
 # __main method__
 if __name__=="__main__":
 	
-	# reading at 450 psi, OF ratio of 6
+	# reading at 450 psi, OF ratio of 6, ambient pressure of 14.7
 	
 	df = pd.read_csv("data/450psi.csv")
 	k = float(df["CP_CV"][df["OF_RATIO"] == 6].iloc[0])
 	T = float(df["CHAMBER_TEMP"][df["OF_RATIO"] == 6].iloc[0])
 	isp = float(df['ISP'][df["OF_RATIO"] == 6].iloc[0])
 	molecular_mass = float(df["MOL_WEIGHT"][df["OF_RATIO"] == 6].iloc[0])
-	ambient = 14.7
+	ambient = 14.7 #in psi
 	
 	#print(k)
 
@@ -450,7 +449,8 @@ if __name__=="__main__":
 	mass_flow = getMassFlow(40960 / getBurnTime(), getExhaustVelocity(isp))
 	aratio =  getOptimumExpansionRatio(T, k, 450, ambient)			# Ae / At	
 	throat_radius = getThroatDiameter(mass_flow, 450, molecular_mass, T, k) / 2  # {'radius_throat': 40, 'radius_exit': 210}		
-
+	print(f"throat radius: {throat_radius}")
+	print(f"expansion ratio at 14.7 psi: {aratio}")
 	# rao_bell_nozzle_contour
 	angles, contour = bell_nozzle(k, aratio, throat_radius, l_percent)
 	# plot contour

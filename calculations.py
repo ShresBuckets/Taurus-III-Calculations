@@ -84,7 +84,7 @@ def getExitDiameter(exp_ratio, throat_diameter):
     return sqrt(throat_diameter**2 * exp_ratio)
     #Ae = ep * At
     #de^2 = ep * dt^2
-def getDivergingLength(throat_diameter, exp_ratio, half_angle = 15, conical = False, bell = False, bell_fraction = 0.8):
+def getDivergingLength(throat_diameter, exp_ratio, half_angle = 15, trapezoidal = False, conical = False, bell = False, bell_fraction = 0.8):
     """
     Returns the length from the throat section to the end of the diverging section for different nozzle configurations. 
     Throat_diameter should be in inches, half angle
@@ -97,7 +97,10 @@ def getDivergingLength(throat_diameter, exp_ratio, half_angle = 15, conical = Fa
     arc_comp = R * ((1.0/cos(half_angle)) - 1) / tan(half_angle)
     L_n =  trapezoidal_comp + arc_comp #distance from throat to exit section
 
-    if conical:
+    if trapezoidal:
+        return trapezoidal_comp
+    
+    elif conical:
         """
         Conical nozzle constructed as follows: draw an arc of a circle with radius R = 1.5 * R_throat. Draw the tangent line to the arc
         at the end of the arc and extend it (this is the diverging section)
@@ -105,5 +108,5 @@ def getDivergingLength(throat_diameter, exp_ratio, half_angle = 15, conical = Fa
         return L_n
 
     elif bell:
-        return L_n * bell_fraction
+        return L_n * bell_fraction  
 
