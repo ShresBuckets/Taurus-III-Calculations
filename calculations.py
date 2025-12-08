@@ -40,7 +40,6 @@ def getBurnTime():
     #print(F_avg)
     return total_impulse / F_avg
 
-
 def getOptimumExpansionRatio(T, k, P0, ambient):
     """
     Returns the optimum expansion ratio assuming the 
