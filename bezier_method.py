@@ -451,6 +451,7 @@ if __name__=="__main__":
 	throat_radius = getThroatDiameter(mass_flow, 450, molecular_mass, T, k) / 2  # {'radius_throat': 40, 'radius_exit': 210}		
 	print(f"throat radius: {throat_radius}")
 	print(f"expansion ratio at 14.7 psi: {aratio}")
+	print(f"exit radius: {math.sqrt(aratio)*throat_radius}")
 	# rao_bell_nozzle_contour
 	angles, contour = bell_nozzle(k, aratio, throat_radius, l_percent)
 	# plot contour
