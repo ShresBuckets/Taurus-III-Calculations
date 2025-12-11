@@ -109,3 +109,5 @@ def getDivergingLength(throat_diameter, exp_ratio, half_angle = 15, trapezoidal 
     elif bell:
         return L_n * bell_fraction  
 
+def getManifoldPressure(mdot, Cd, total_area, density, chamber_pressure):
+    return
