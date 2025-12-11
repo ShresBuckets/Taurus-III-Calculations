@@ -1,6 +1,7 @@
 ![alt text](https://sites.utexas.edu/sec/files/2020/09/LRA-Logo-James-A-Schoener.jpg)
 # Taurus-III-Calculations
-Taurus 3 Calculations and Data Visualizations
+Taurus 3 Calculations and Data Visualization. Use the library in calculations.py to help determine engine parameters and combustion properties. 
+
 
 How to use this program to find nozzle dimensions:
 1. Perform a parameteric sweep on PROPEP over a range of OF ratios at differing chamber pressures. Collect resulting data in a spreadsheet and calculate the ISP at each parameter (do not record the value of ISP* as this is the vacuum optimized ISP, a subtly different metric). 
