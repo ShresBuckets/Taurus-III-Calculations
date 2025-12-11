@@ -9,5 +9,8 @@ How to use this program to find nozzle dimensions:
 
 3. Import PROPEP data and ISP as a CSV. Change hardcoded values for impulse and burn time.
 
+Investigation of Burn Time:
+One of the early ambiguities the team faced was in determining the burn time. This was due to the fact that regression constants for the particular design had not been characterized in previous iterations of the engine. The extent to which nozzle geometry depends on burn time was investigated in burn_time_investigation.py (see Taurus III documentation for the current burn time determination metholodgy).
+
 
 
