@@ -8,6 +8,9 @@ from calculations import getOptimumExpansionRatio, getThroatDiameter, getMassFlo
 from matplotlib.patches import Arc
 from bisect import bisect_left
 
+"""Credit to github user ravi4ram for implementing the calculations in the aspirespace doc. I have modified this program to integrate directly with PROPEP CSV 
+combustion data."""
+
 
 """
  Implemented from the following technical notes 
